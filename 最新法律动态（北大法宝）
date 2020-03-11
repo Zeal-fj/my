@@ -9,6 +9,8 @@ import requests  # 导入requests库
 import re  # 导入正则表达式库
 import time  # 导入时间库
 import pandas as pd # 导入pandas库
+import matplotlib.pyplot as plt
+import wordcloud as wc
 
 print('created by Zeaf')
 print('若想停止请按ctrl+C')
@@ -34,7 +36,7 @@ for url in urls:#循环输出获得的网址
     place = re.findall('【来源】</font> (.*?)</td>', html) # 获取来源
     keyword = re.findall('【关键词语】</font> <a href=".*?" target=_blank>(.*?)</a>', html) # 获取关键词
     #合并数据用于制表
-    title_in.append(title[0])#注意这里title为列表，须先读取后导入
+    title_in.append(title[0])#注意这里title为列表，须先读取后导入，下同
     date_in.append(date[0])
     place_in.append(place[0])
     keyword_in.append(keyword[0])
@@ -44,4 +46,10 @@ for url in urls:#循环输出获得的网址
 data={'标题':title_in, '发布日期':date_in, '来源':place_in, '关键词语':keyword_in,'原文链接':url_in}
 y=pd.DataFrame(data)
 y.to_excel('news.xlsx',index=False)#制表
-print('成功！')
+print('生成表格成功！')
+#绘制词云
+content = ' '.join(keyword_in)
+wordcloud = wc.WordCloud(max_words=50,font_path='simhei.ttf').generate(content)#黑体字
+plt.imshow(wordcloud)#绘制
+plt.show()
+wordcloud.to_file('news.jpg')#保存图片，可以d:\来指定目录
