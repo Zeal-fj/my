@@ -4,4 +4,4 @@
 
 官方群：615443455
 
-蓝奏云地址：https://www.lanzous.com/b00n3z7ed
+蓝奏云地址：https://zeaf.lanzous.com/b00n3z7ed
